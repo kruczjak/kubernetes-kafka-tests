@@ -33,5 +33,7 @@ spec:
         - "producer"
         - "-brokers"
         - "my-kafka-kafka-headless.kafka.svc.cluster.local:9092"
+        - "-messages"
+        - "2147480000"
       restartPolicy: Never
   backoffLimit: 0
