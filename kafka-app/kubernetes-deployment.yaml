@@ -1,17 +1,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: kafka-example-app-producer
+  name: kafka-example-app-consumer
 spec:
   template:
     spec:
       containers:
-      - name: kafka-example-app-producer
+      - name: kafka-example-app-consumer
         image: kruczjak/kafka-example-app:latest
         command:
-        - main
+        - ./main
         - "-worker_type"
         - "consumer"
+        - "-brokers"
+        - "my-kafka-kafka-headless.kafka.svc.cluster.local:9092"
       restartPolicy: Never
   backoffLimit: 0
 ---
@@ -26,8 +28,10 @@ spec:
       - name: kafka-example-app-producer
         image: kruczjak/kafka-example-app:latest
         command:
-        - main
+        - ./main
         - "-worker_type"
         - "producer"
+        - "-brokers"
+        - "my-kafka-kafka-headless.kafka.svc.cluster.local:9092"
       restartPolicy: Never
   backoffLimit: 0

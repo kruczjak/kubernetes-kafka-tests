@@ -1,14 +1,15 @@
 package kafka_specific
 
 import (
-	"github.com/Shopify/sarama"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
-	"time"
 	"strconv"
-	"fmt"
 	"strings"
+	"time"
+
+	"github.com/Shopify/sarama"
 )
 
 func StartProducer(brokers *string, maxMessages int) {
@@ -52,7 +53,8 @@ func StartProducer(brokers *string, maxMessages int) {
 			select {
 			case producer.Input() <- msg:
 				enqueued++
-				fmt.Println("Produce message")
+				fmt.Print("Produce message: ")
+				fmt.Println(enqueued)
 			case err := <-producer.Errors():
 				errors++
 				fmt.Println("Failed to produce message:", err)

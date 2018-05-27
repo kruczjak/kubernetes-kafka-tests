@@ -1,12 +1,13 @@
 package kafka_specific
 
 import (
-	"github.com/Shopify/sarama"
-	"os"
-	"os/signal"
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
 	"strings"
+
+	"github.com/Shopify/sarama"
 )
 
 func StartConsumer(brokers *string) {
@@ -48,7 +49,8 @@ func StartConsumer(brokers *string) {
 				fmt.Println(err)
 			case msg := <-consumer.Messages():
 				msgCount++
-				fmt.Println("Received messages", string(msg.Key), string(msg.Value))
+				fmt.Print(msgCount)
+				fmt.Println(": Received messages", string(msg.Key), string(msg.Value))
 			case <-signals:
 				fmt.Println("Interrupt is detected")
 				doneCh <- struct{}{}
