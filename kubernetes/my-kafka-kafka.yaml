@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  clusterName: ""
+  creationTimestamp: 2018-05-27T00:26:22Z
+  generation: 1
+  labels:
+    k8s-app: kafka
+    prometheus: kube-prometheus
+  name: my-kafka-kafka
+  namespace: monitoring
+  resourceVersion: "2970"
+  selfLink: /apis/monitoring.coreos.com/v1/namespaces/monitoring/servicemonitors/my-kafka-kafka
+  uid: 95173d30-6144-11e8-aaad-08002752907a
+spec:
+  endpoints:
+  - interval: 10s
+    port: jmx-exporter
+  jobLabel: k8s-app
+  namespaceSelector:
+    matchNames:
+    - kafka
+  selector:
+    matchLabels:
+      app: kafka
+      release: my-kafka
