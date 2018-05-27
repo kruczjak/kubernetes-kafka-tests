@@ -8,12 +8,13 @@ import (
 	"time"
 	"strconv"
 	"fmt"
+	"strings"
 )
 
-func StartProducer() {
+func StartProducer(brokers *string, maxMessages int) {
 	config := sarama.NewConfig()
 
-	brokerList := []string{"localhost:9092"}
+	brokerList := strings.Split(*brokers, ",")
 
 	producer, err := sarama.NewAsyncProducer(brokerList, config)
 	if err != nil {
@@ -38,6 +39,9 @@ func StartProducer() {
 	doneCh := make(chan struct{})
 	go func() {
 		for {
+			if enqueued > maxMessages {
+				break
+			}
 
 			strTime := strconv.Itoa(int(time.Now().Unix()))
 			msg := &sarama.ProducerMessage{

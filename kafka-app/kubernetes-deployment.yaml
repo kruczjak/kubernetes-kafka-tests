@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-example-app-producer
+spec:
+  template:
+    spec:
+      containers:
+      - name: kafka-example-app-producer
+        image: kruczjak/kafka-example-app:latest
+        command:
+        - main
+        - "-worker_type"
+        - "consumer"
+      restartPolicy: Never
+  backoffLimit: 0
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-example-app-producer
+spec:
+  template:
+    spec:
+      containers:
+      - name: kafka-example-app-producer
+        image: kruczjak/kafka-example-app:latest
+        command:
+        - main
+        - "-worker_type"
+        - "producer"
+      restartPolicy: Never
+  backoffLimit: 0

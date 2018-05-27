@@ -6,13 +6,14 @@ import (
 	"os/signal"
 	"fmt"
 	"log"
+	"strings"
 )
 
-func StartConsumer() {
+func StartConsumer(brokers *string) {
 	config := sarama.NewConfig()
 	config.Consumer.Return.Errors = true
 
-	brokerList := []string{"localhost:9092"}
+	brokerList := strings.Split(*brokers, ",")
 
 	master, err := sarama.NewConsumer(brokerList, config)
 	if err != nil {
